@@ -1,47 +1,80 @@
-<img src="https://images.ctfassets.net/0sea1vycfyqy/62gNRE2YaYcGCcrMngW2s2/471a5490ff9363ad9c183b3af5439e78/logo-green.svg" width="300" />
+## README
 
-This repository contains the Lovevery Frontend take-home challenge. This activity is open-ended without a right or wrong answer; it's only meant to gauge your approach to frontend problem solving. Relax, take your time, and have fun.
+### Project Overview
 
-## Setup
+This project involves building reusable React components based on provided mockups. The components created are `MediaBanner` and `ItemRow`. The focus is on using TypeScript for type safety and Tailwind CSS for styling. The components leverage data from a custom hook at `src/useData`.
 
-This repository contains a Next.js application generated via `create-next-app`.
+### Components
 
-```bash
-$   npm install      # install dependencies
-$   npm run dev      # run locally
-```
+#### MediaBanner
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The `MediaBanner` component displays a banner with an image, text, and a button. It adapts its layout based on the `orientation` prop.
 
-## Prompt
+**Props:**
+- `img`: Contains the source and alt text for the image.
+- `leadingText`: Text displayed above the heading.
+- `heading`: The main heading text.
+- `orientation`: Determines the layout orientation of the component.
+- `button`: Contains the text and href for the button.
 
-The goal of this exercise is to build a reusable React component and to place it on a test page. The mockup details two different components to choose from: the MediaBanner and the ItemRow. The mockup provides a general layout, a color palette, and expected behavior on various screen sizes. Your task is to build one of these components in a reusable manner, to leverage the hook at `src/useData`, and to render the component on the page at `src/page`. Please use both TypeScript and Tailwind CSS to build your solution.
+**Approach:**
+- The component checks for the presence of the `img` prop to render conditionally.
+- The layout orientation is controlled by dynamically applying Tailwind CSS classes.
+- The `PrimaryButton` component is used for the button, ensuring reusability and consistency.
 
-## Mockups
+#### ItemRow
 
-<details>
-  <summary>MediaBanner</summary>
+The `ItemRow` component displays a list of items in a grid format. Each item includes an image, heading, and body text.
 
-![MediaBanner](resources/MediaBanner.png)
+**Props:**
+- `items`: An array of items, each containing an image, heading, and body text.
 
-</details>
+**Approach:**
+- The component checks for the presence of items before rendering.
+- A responsive grid layout is achieved using Tailwind CSS classes.
+- Each item is displayed using a flexible layout that adapts to different screen sizes.
 
-<details>
-  <summary>ItemRow</summary>
+#### PrimaryButton
 
-![ItemRow](resources/ItemRow.png)
+The `PrimaryButton` component renders a styled button, which is used in both the `MediaBanner` and other potential components.
 
-</details>
+**Props:**
+- `text`: The button text.
+- `href`: The button link.
 
-## Scoring
+**Approach:**
+- The component applies consistent styling using Tailwind CSS classes.
+- Ensures the button is accessible by using semantic HTML.
 
-This activity is intentionally open-ended and aims to gauge your general approach to React development. The following themes will be considered during review:
+### Technical Details
 
-1. **Technical Expertise**: Showcasing proficiency in React and TypeScript, emphasizing effective code organization and type-safe practices.
-1. **Code Quality**: Demonstrating clean, adaptable coding with a robust approach to testing, ensuring efficiency and readability for various data structures.
-1. **Problem Solving**: Exhibiting innovative, responsive solutions that effectively function across different devices and screen sizes.
-1. **Product Awareness**: Understanding the impact of development decisions on the end-user experience and the overall product.
+**TypeScript:**
+- TypeScript is used to define the props for each component, ensuring type safety and better development experience.
+- Types are imported from the `MockData` type in `src/useData`.
 
-## Submission
+**Tailwind CSS:**
+- Tailwind CSS provides utility-first styling, making it easy to apply responsive styles and maintain a consistent design.
+- Responsive classes are used to ensure components adapt to different screen sizes.
 
-Once you're done, please email us with an archive of your repository. Kindly write a README detailing a description of your solution. This will help us understand your technical approach, design decisions and your ability to effectively communicate and document your work.
+### Design Decisions
+
+1. **Component Reusability:**
+   - The components are designed to be reusable, with props that allow for customization based on different use cases.
+
+2. **Responsive Design:**
+   - Tailwind CSS is used to apply responsive styles, ensuring the components look good on various screen sizes.
+
+3. **Type Safety:**
+   - TypeScript is used to define the props, ensuring that the components receive the correct data types and helping to catch errors during development.
+
+### How to Run
+
+1. **Install Dependencies:**
+   ```bash
+   npm install
+2. **Start Development Server:**
+   ```bash
+   npm run dev
+### Conclusion
+
+This project demonstrates the creation of reusable React components using TypeScript and Tailwind CSS. The components are designed to be flexible and responsive, leveraging type-safe practices and utility-first styling. 

@@ -20,21 +20,25 @@ function PlaytimeBenefits() {
         items={[
           {
             iconSrc: iconImg.src,
+            iconAlt: "made for learning icon",
             subheader: "Made for learning",
             body: "Our play essentials are designed by a team of experts, academics, researchers, and specialists to be exactly what your child needs and loves."
           },
           {
             iconSrc: iconImg.src,
+            iconAlt: "stage-based play icon",
             subheader: "Stage-based play",
             body: "Our play essentials are designed by a team of experts, academics, researchers, and specialists to be exactly what your child needs and loves."
           },
           {
             iconSrc: iconImg.src,
+            iconAlt: "thoughfully created icon",
             subheader: "Thoughtfully created",
             body: "Our play essentials are designed by a team of experts, academics, researchers, and specialists to be exactly what your child needs and loves."
           },
           {
             iconSrc: iconImg.src,
+            iconAlt: "child-safe & sustainable icon",
             subheader: "Child-Safe & Sustainable",
             body: "Our play essentials are designed by a team of experts, academics, researchers, and specialists to be exactly what your child needs and loves."
           },

@@ -10,7 +10,8 @@ function JoyfulBanner() {
 
   return (
     <MediaBanner
-      imageSrc={bannerImg.src}
+      mediaSrc={bannerImg.src}
+      mediaType="image"
       subheader="For all their firsts"
       header="Joyful play at every stage, ages 0-4"
       ctaText="Explore The Play Kits"

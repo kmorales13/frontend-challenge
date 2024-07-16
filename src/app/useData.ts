@@ -30,7 +30,7 @@ export interface MockData {
   };
 }
 
-const MOCK_DATA = {
+export const MOCK_DATA: MockData = {
   mediaBanner: {
     img: {
       src: "https://images.ctfassets.net/0sea1vycfyqy/66XcWTL8RWek8gliZLFpYu/e12b79045911f66166bdd34cffeadd62/700x500__1_.png",

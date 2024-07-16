@@ -1,44 +1,35 @@
 import Image from "next/image"
 import PrimaryButton from "../Buttons/PrimaryButton"
+import { MockData } from "@/app/useData"
 
-export interface MediaBannerProps {
-  mediaSrc: string
-  mediaType: "image" | "video"
-  subheader: string
-  header: string
-  ctaText: string
-  ctaOnClick: () => void
-}
+export type MediaBannerProps = MockData["mediaBanner"]
 
-function MediaBanner({ mediaSrc, mediaType, subheader, header, ctaText, ctaOnClick }: MediaBannerProps) {
+function MediaBanner({ img, leadingText, heading, orientation, button }: MediaBannerProps) {
+  if (!img) return null
+
+  const orientationClassName = orientation === "right" ? "flex-row" : "flex-row-reverse"
+
   return (
-    <div className="flex flex-col w-full max-w-3xl sm:flex-row" role="banner">
-      <div className="flex items-center justify-center bg-base-200 aspect-square grow basis-1/2 relative">
-        {mediaType === "image" ? (
-          <Image alt="banner image" className="object-cover" src={mediaSrc} fill />
-        ) : (
-          <video role="video" className="w-full h-full object-cover" src={mediaSrc} autoPlay muted loop>
-            <p>Your browser doesn't support HTML video.</p>
-          </video>
-        )}
-      </div>
+    <div className={`flex flex-col w-full sm:${orientationClassName}`} role="banner">
+      <figure className="bg-base-200 aspect-square grow basis-1/2 relative object-cover">
+        <Image alt={img.alt || "banner image"} className="object-cover" src={img.src} fill />
+        <figcaption>{img.caption}</figcaption>
+      </figure>
 
       <div
         className="flex flex-col items-center justify-center gap-1 p-4 text-body bg-base-100 sm:gap-2 md:gap-3 sm:p-6 md:p-14 sm:aspect-square grow basis-1/2 sm:items-start"
       >
-        <span
-          className="text-sm font-semibold md:font-normal"
-        >
-          {subheader}
+        <span className="text-sm font-semibold md:font-normal">
+          {leadingText}
         </span>
-        <h2
-          className="text-xl font-bold text-center md:font-normal md:text-3xl sm:text-left"
-        >
-          {header}
+        <h2 role="heading" className="text-xl font-bold text-center md:font-normal md:text-3xl sm:text-left">
+          {heading}
         </h2>
-        <div className="w-full sm:max-w-fit my-1">
-          <PrimaryButton text={ctaText} onClick={ctaOnClick} />
-        </div>
+        {button?.text && (
+          <div className="w-full sm:max-w-fit my-2">
+            <PrimaryButton text={button?.text} href={button.href} />
+          </div>
+        )}
       </div>
     </div>
   )

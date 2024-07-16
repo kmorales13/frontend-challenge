@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import ItemRow from './ItemRow'
-import imageIcon from "../../../../public/icon.png"
+import { MOCK_DATA } from '@/app/useData'
 
 const meta = {
   title: 'ItemRow',
@@ -10,32 +10,7 @@ const meta = {
   },
   tags: ['autodocs'],
   args: {
-    items: [
-      {
-        iconSrc: imageIcon.src,
-        iconAlt: "Icon 1",
-        subheader: "Subheader 1",
-        body: "Body 1",
-      },
-      {
-        iconSrc: imageIcon.src,
-        iconAlt: "Icon 2",
-        subheader: "Subheader 2",
-        body: "Body 2",
-      },
-      {
-        iconSrc: imageIcon.src,
-        iconAlt: "Icon 3",
-        subheader: "Subheader 3",
-        body: "Body 3",
-      },
-      {
-        iconSrc: imageIcon.src,
-        iconAlt: "Icon 4",
-        subheader: "Subheader 4",
-        body: "Body 4",
-      },
-    ]
+    items: MOCK_DATA.itemRow.items
   },
 } satisfies Meta<typeof ItemRow>
 

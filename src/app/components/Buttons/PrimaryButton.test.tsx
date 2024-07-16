@@ -1,23 +1,16 @@
-import { render, fireEvent, screen } from '@testing-library/react'
-import '@testing-library/jest-dom'
-import PrimaryButton from './PrimaryButton'
+import { render, fireEvent, screen } from "@testing-library/react"
+import "@testing-library/jest-dom"
+import PrimaryButton from "./PrimaryButton"
 
-describe('PrimaryButton Component', () => {
-  test('renders button with correct text', () => {
-    const buttonText = 'Click me'
-    render(<PrimaryButton text={buttonText} onClick={() => {}} />)
+describe("PrimaryButton Component", () => {
+  test("renders button with correct text and href", () => {
+    const buttonText = 'Click Me'
+    const buttonHref = 'https://example.com'
 
-    const buttonElement = screen.getByText(buttonText)
-    expect(buttonElement).toBeInTheDocument()
-  })
+    render(<PrimaryButton text={buttonText} href={buttonHref} />)
 
-  test('executes onClick function when clicked', () => {
-    const handleClick = jest.fn()
-    render(<PrimaryButton text="Click me" onClick={handleClick} />)
-
-    const buttonElement = screen.getByText('Click me')
-    fireEvent.click(buttonElement)
-
-    expect(handleClick).toHaveBeenCalledTimes(1)
+    const linkElement = screen.getByRole('link', { name: buttonText })
+    expect(linkElement).toBeInTheDocument()
+    expect(linkElement).toHaveAttribute('href', buttonHref)
   })
 })

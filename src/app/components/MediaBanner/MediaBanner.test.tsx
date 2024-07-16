@@ -1,55 +1,83 @@
-import { render, screen, fireEvent } from "@testing-library/react"
+import React from 'react'
+import { render, screen, within } from '@testing-library/react'
+import MediaBanner, { MediaBannerProps } from './MediaBanner'
 import '@testing-library/jest-dom'
-import MediaBanner, { MediaBannerProps } from "./MediaBanner"
 
-describe("MediaBanner Component", () => {
-  const mockCtaOnClick = jest.fn()
+// Mock the Image component from next/image
+jest.mock('next/image', () => ({
+  __esModule: true,
+  default: ({ alt, src }: NonNullable<MediaBannerProps["img"]>) => <img alt={alt} src={src} />,
+}))
 
-  const imageProps: MediaBannerProps = {
-    mediaSrc: "/test-image.png",
-    mediaType: "image",
-    subheader: "Test Subheader",
-    header: "Test Header",
-    ctaText: "Click Me",
-    ctaOnClick: mockCtaOnClick,
+describe('MediaBanner Component', () => {
+  const defaultProps: MediaBannerProps = {
+    img: {
+      src: '/test-image.jpg',
+      alt: 'Test image',
+      caption: 'Test caption',
+    },
+    leadingText: 'Test Leading Text',
+    heading: 'Test Heading',
+    orientation: 'right',
+    button: {
+      text: 'Test Button',
+      href: 'https://example.com',
+    },
   }
 
-  const videoProps: MediaBannerProps = {
-    mediaSrc: "/test-video.mp4",
-    mediaType: "video",
-    subheader: "Test Subheader",
-    header: "Test Header",
-    ctaText: "Click Me",
-    ctaOnClick: mockCtaOnClick,
-  }
+  test('renders the MediaBanner with image, leading text, heading, and button', () => {
+    render(<MediaBanner {...defaultProps} />)
 
-  test("renders the MediaBanner with image", () => {
-    render(<MediaBanner {...imageProps} />)
+    const image = screen.getByAltText('Test image')
+    expect(image).toBeInTheDocument()
+    expect(image).toHaveAttribute('src', '/test-image.jpg')
 
-    expect(screen.getByRole("banner")).toBeInTheDocument()
-    expect(screen.getByAltText("banner image")).toBeInTheDocument()
-    expect(screen.getByText(imageProps.subheader)).toBeInTheDocument()
-    expect(screen.getByText(imageProps.header)).toBeInTheDocument()
-    expect(screen.getByText(imageProps.ctaText)).toBeInTheDocument()
+    const caption = screen.getByText('Test caption')
+    expect(caption).toBeInTheDocument()
+
+    const leadingText = screen.getByText('Test Leading Text')
+    expect(leadingText).toBeInTheDocument()
+
+    const heading = screen.getByRole('heading', { name: 'Test Heading' })
+    expect(heading).toBeInTheDocument()
+
+    const button = screen.getByText('Test Button')
+    expect(button).toBeInTheDocument()
+    expect(button).toHaveAttribute('href', 'https://example.com')
   })
 
-  test("renders the MediaBanner with video", () => {
-    render(<MediaBanner {...videoProps} />)
+  test('renders the MediaBanner without a button if button props are not provided', () => {
+    const propsWithoutButton: MediaBannerProps = {
+      ...defaultProps,
+      button: undefined,
+    }
+    render(<MediaBanner {...propsWithoutButton} />)
 
-    expect(screen.getByRole("banner")).toBeInTheDocument()
-    expect(screen.getByRole("video")).toBeInTheDocument()
-    expect(screen.getByText("Your browser doesn't support HTML video.")).toBeInTheDocument()
-    expect(screen.getByText(videoProps.subheader)).toBeInTheDocument()
-    expect(screen.getByText(videoProps.header)).toBeInTheDocument()
-    expect(screen.getByText(videoProps.ctaText)).toBeInTheDocument()
+    const button = screen.queryByText('Test Button')
+    expect(button).toBeNull()
   })
 
-  test("calls the CTA onClick handler when button is clicked", () => {
-    render(<MediaBanner {...imageProps} />)
+  test('does not render the MediaBanner if img prop is not provided', () => {
+    const propsWithoutImage: MediaBannerProps = {
+      ...defaultProps,
+      img: undefined,
+    }
+    const { container } = render(<MediaBanner {...propsWithoutImage} />)
+    expect(container.firstChild).toBeNull()
+  })
 
-    const ctaButton = screen.getByText(imageProps.ctaText)
-    fireEvent.click(ctaButton)
+  test('applies the correct orientation class based on orientation prop', () => {
+    const rightRender = render(<MediaBanner {...defaultProps} />)
+    const banner = screen.getByRole('banner')
+    expect(banner).toHaveClass('sm:flex-row')
+    rightRender.unmount()
 
-    expect(mockCtaOnClick).toHaveBeenCalledTimes(1)
+    const propsWithLeftOrientation: MediaBannerProps = {
+      ...defaultProps,
+      orientation: 'left',
+    }
+    render(<MediaBanner {...propsWithLeftOrientation} />)
+    const bannerWithLeftOrientation = screen.getByRole('banner')
+    expect(bannerWithLeftOrientation).toHaveClass('sm:flex-row-reverse')
   })
 })

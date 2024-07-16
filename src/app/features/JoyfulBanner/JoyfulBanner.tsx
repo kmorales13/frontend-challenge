@@ -1,22 +1,23 @@
 'use client'
 
 import MediaBanner from "@/app/components/MediaBanner/MediaBanner"
-import bannerImg from "../../../../public/banner.png"
+import { useData } from "@/app/useData"
 
 function JoyfulBanner() {
-  function handleCTAClick() {
-    console.log("handleCTAClick")
-  }
+  const { data, error, isLoading } = useData()
+
+  if (error || isLoading) return null
 
   return (
-    <MediaBanner
-      mediaSrc={bannerImg.src}
-      mediaType="image"
-      subheader="For all their firsts"
-      header="Joyful play at every stage, ages 0-4"
-      ctaText="Explore The Play Kits"
-      ctaOnClick={handleCTAClick}
-    />
+    <section className="w-full max-w-3xl">
+      <MediaBanner
+        img={data?.mediaBanner.img}
+        leadingText={data?.mediaBanner.leadingText}
+        heading={data?.mediaBanner.heading}
+        orientation={data?.mediaBanner.orientation}
+        button={data?.mediaBanner.button}
+      />
+    </section>
   )
 }
 

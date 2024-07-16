@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import PrimaryButton from './PrimaryButton'
-import { fn } from '@storybook/test'
 
 const meta = {
   title: 'PrimaryButton',
@@ -11,7 +10,7 @@ const meta = {
   tags: ['autodocs'],
   args: {
     text: "Click me",
-    onClick: fn()
+    href: "/",
   },
 } satisfies Meta<typeof PrimaryButton>
 
